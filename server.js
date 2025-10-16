@@ -4,9 +4,8 @@ import { createProxyMiddleware } from "http-proxy-middleware";
 
 const app = express();
 
-// Позволяем проксировать любой URL, передаваемый как query
 app.use("/", createProxyMiddleware({
-  target: "https://example.com", // базовый URL
+  target: "https://example.com",
   changeOrigin: true,
   router: req => req.query.url || "https://example.com",
   pathRewrite: (path, req) => {
@@ -18,4 +17,5 @@ app.use("/", createProxyMiddleware({
   }
 }));
 
-app.listen(10000, () => console.log("Proxy running on port 10000"));
+const PORT = process.env.PORT || 10000;
+app.listen(PORT, () => console.log(`Proxy running on port ${PORT}`));
